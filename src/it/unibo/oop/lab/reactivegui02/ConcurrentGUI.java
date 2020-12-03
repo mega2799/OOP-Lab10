@@ -1,9 +1,6 @@
 package it.unibo.oop.lab.reactivegui02;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,27 +36,14 @@ public class ConcurrentGUI extends JFrame {
         final Agent agent = new Agent();
         new Thread(agent).start();
 
-        upButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                agent.swtichOperation(true);
-            }
-        });
-        downButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                agent.swtichOperation(false);
-            }
-        });
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
+        upButton.addActionListener(e -> agent.swtichOperation(true));
+        downButton.addActionListener(e -> agent.swtichOperation(false));
+        stopButton.addActionListener(e -> {
                 agent.stopRunning();
                 downButton.setEnabled(false);
                 upButton.setEnabled(false);
                 stopButton.setEnabled(false);
-            }
-        });
+            });
     }
 
     public class Agent implements Runnable {
@@ -93,8 +77,8 @@ public class ConcurrentGUI extends JFrame {
             while (isRunning) {
                 try {
                     Thread.sleep(100);
-                    SwingUtilities.invokeAndWait(() -> ConcurrentGUI.this.label.setText(this.applyOperation(runCount)));
-                } catch (InterruptedException | InvocationTargetException e) {
+                    SwingUtilities.invokeLater(() -> ConcurrentGUI.this.label.setText(this.applyOperation(runCount)));
+                } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
