@@ -18,8 +18,8 @@ public class AnotherConcurrentGUI extends JFrame {
      * 
      */
     private static final long serialVersionUID = -5809059974380444922L;
-    private static int X = 800;
-    private static int Y = 600;
+    private static int X_DIMENSION = 600;
+    private static int Y_DIMENSION = 150;
     private static int CLOCK_END = 10;
 
     private JPanel panel = new JPanel(new FlowLayout());
@@ -30,9 +30,10 @@ public class AnotherConcurrentGUI extends JFrame {
     private int timer;
 
     final Agent agent = new Agent();
+
     public AnotherConcurrentGUI() {
         super("Concurrent GUI");
-        this.setSize(X, Y);
+        this.setSize(X_DIMENSION, Y_DIMENSION);
         panel.add(label);
         panel.add(upButton);
         panel.add(downButton);
@@ -48,19 +49,22 @@ public class AnotherConcurrentGUI extends JFrame {
         upButton.addActionListener(e -> agent.swtichOperation(true));
         downButton.addActionListener(e -> agent.swtichOperation(false));
         stopButton.addActionListener(e -> {
-                dryStop();
-            });
+            dryStop();
+        });
     }
+
     public void dryStop() {
         agent.stopRunning();
         AnotherConcurrentGUI.this.upButton.setEnabled(false);
         AnotherConcurrentGUI.this.downButton.setEnabled(false);
         AnotherConcurrentGUI.this.stopButton.setEnabled(false);
     }
+
     public class Agent implements Runnable {
         private volatile int runCount;
         private volatile boolean isAdding;
         private volatile boolean isRunning;
+
         public Agent() {
             super();
             this.runCount = 0;
@@ -78,8 +82,9 @@ public class AnotherConcurrentGUI extends JFrame {
             }
             return String.valueOf(this.runCount--);
         }
+
         public final void stopRunning() {
-           this.isRunning = false; 
+            this.isRunning = false;
         }
 
         @Override
@@ -95,20 +100,21 @@ public class AnotherConcurrentGUI extends JFrame {
         }
     }
 
-    public class Clock implements Runnable { 
+    public class Clock implements Runnable {
 
         private int timer;
+
         @Override
         public void run() {
-           while (this.timer < CLOCK_END) {
-              try {
-                Thread.sleep(1000);
-                this.timer++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (this.timer < CLOCK_END) {
+                try {
+                    Thread.sleep(1000);
+                    this.timer++;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-           }
-           dryStop();
+            dryStop();
         }
     }
 }
