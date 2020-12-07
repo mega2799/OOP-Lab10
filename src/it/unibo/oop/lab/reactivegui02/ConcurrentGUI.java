@@ -14,8 +14,8 @@ public class ConcurrentGUI extends JFrame {
      * 
      */
     private static final long serialVersionUID = -5809059974380444922L;
-    private static int X = 800;
-    private static int Y = 600;
+    private static int X_DIMENSION = 600; //wanted to try prefixed dimension
+    private static int Y_DIMENSION = 150;
 
     private JPanel panel = new JPanel(new FlowLayout());
     private JLabel label = new JLabel();
@@ -25,7 +25,7 @@ public class ConcurrentGUI extends JFrame {
 
     public ConcurrentGUI() {
         super("Concurrent GUI");
-        this.setSize(X, Y);
+        this.setSize(X_DIMENSION, Y_DIMENSION);
         panel.add(label);
         panel.add(upButton);
         panel.add(downButton);
@@ -80,7 +80,6 @@ public class ConcurrentGUI extends JFrame {
                     Thread.sleep(100);
                     SwingUtilities.invokeLater(() -> ConcurrentGUI.this.label.setText(this.applyOperation(runCount)));
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
