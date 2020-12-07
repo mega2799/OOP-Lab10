@@ -14,7 +14,7 @@ public class ConcurrentGUI extends JFrame {
      * 
      */
     private static final long serialVersionUID = -5809059974380444922L;
-    private static int X_DIMENSION = 600; //wanted to try prefixed dimension
+    private static int X_DIMENSION = 600; // wanted to try prefixed dimension
     private static int Y_DIMENSION = 150;
 
     private JPanel panel = new JPanel(new FlowLayout());
@@ -40,11 +40,11 @@ public class ConcurrentGUI extends JFrame {
         upButton.addActionListener(e -> agent.swtichOperation(true));
         downButton.addActionListener(e -> agent.swtichOperation(false));
         stopButton.addActionListener(e -> {
-                agent.stopRunning();
-                downButton.setEnabled(false);
-                upButton.setEnabled(false);
-                stopButton.setEnabled(false);
-            });
+            agent.stopRunning();
+            downButton.setEnabled(false);
+            upButton.setEnabled(false);
+            stopButton.setEnabled(false);
+        });
     }
 
     public class Agent implements Runnable {
@@ -52,6 +52,7 @@ public class ConcurrentGUI extends JFrame {
         private volatile int runCount;
         private volatile boolean isAdding;
         private volatile boolean isRunning;
+
         public Agent() {
             super();
             this.runCount = 0;
@@ -69,8 +70,9 @@ public class ConcurrentGUI extends JFrame {
             }
             return String.valueOf(this.runCount--);
         }
+
         public final void stopRunning() {
-           this.isRunning = false; 
+            this.isRunning = false;
         }
 
         @Override
